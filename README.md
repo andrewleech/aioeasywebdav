@@ -27,48 +27,51 @@ Install using distribute:
 
 Quick Start
 -----------
+```python
+import aioeasywebdav
+loop = asyncio.get_event_loop()
 
-    import aioeasywebdav
-    loop = asyncio.get_event_loop()
-    
-    # Start off by creating a client object. Username and
-    # password may be omitted if no authentication is needed.
-    webdav = aioeasywebdav.connect('webdav.your-domain.com', username='myuser', password='mypass')
-    
-    # Do some stuff:
-    loop.run_until_complete(webdav.mkdir('some_dir'))
-    loop.run_until_complete(webdav.rmdir('another_dir'))
-    
-    async def fn():
-        await webdav.download('/remote/path/to/file', '/local/target/file')
-        await webdav.upload('/local/path/to/file', '/remote/target/file')
-    loop.run_until_complete(fn())
+# Start off by creating a client object. Username and
+# password may be omitted if no authentication is needed.
+webdav = aioeasywebdav.connect('webdav.your-domain.com', username='myuser', password='mypass')
+
+# Do some stuff:
+loop.run_until_complete(webdav.mkdir('some_dir'))
+loop.run_until_complete(webdav.rmdir('another_dir'))
+
+async def fn():
+    await webdav.download('/remote/path/to/file', '/local/target/file')
+    await webdav.upload('/local/path/to/file', '/remote/target/file')
+loop.run_until_complete(fn())
+```
 
 Client object API
 -----------------
 
 The API is pretty much self-explanatory:
-
-    cd(path)
-    ls(path=None)
-    exists(remote_path)
-    mkdir(path, safe=False)
-    mkdirs(path)
-    rmdir(path, safe=False)
-    delete(file_path)
-    upload(local_path_or_fileobj, remote_path)
-    download(remote_path, local_path)
+```python
+cd(path)
+ls(path=None)
+exists(remote_path)
+mkdir(path, safe=False)
+mkdirs(path)
+rmdir(path, safe=False)
+delete(file_path)
+upload(local_path_or_fileobj, remote_path)
+download(remote_path, local_path)
+```
 
 Using clientside SSL certificate
 --------------------------------
-
-    webdav = aioeasywebdav.connect('secure.example.net',
-                                   username='user',
-                                   password='pass',
-                                   protocol='https',
-                                   cert="/path/to/your/certificate.pem")
-    # Do some stuff:
-    print(await webdav.ls())
+```python
+webdav = aioeasywebdav.connect('secure.example.net',
+                                username='user',
+                                password='pass',
+                                protocol='https',
+                                cert="/path/to/your/certificate.pem")
+# Do some stuff:
+print(await webdav.ls())
+```
 
 Please note that all options and restriction regarding the "cert" parameter from
 [Requests API](http://docs.python-requests.org/en/latest/api/) apply here as the parameter is only passed through!
